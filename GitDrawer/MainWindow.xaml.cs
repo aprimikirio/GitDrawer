@@ -38,21 +38,28 @@ namespace GitDrawer
         }
 
         private void DrawGrid(double x = 0, double y = 0, double edge = 10, double gap = 2, int width = 53, int height = 7)
-        {for (int i = 0; i < width; i++)
+        {
+            for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
                     Rectangle dayRectangle = new Rectangle();
-                    dayRectangle.Width = edge;
-                    dayRectangle.Height = edge;
+                    dayRectangle.Width = edge + gap;
+                    dayRectangle.Height = dayRectangle.Width;
                     dayRectangle.VerticalAlignment = VerticalAlignment.Top;
                     dayRectangle.HorizontalAlignment = HorizontalAlignment.Left;
-                    dayRectangle.Fill = Brushes.Green;
-                    dayRectangle.Triggers.Add( new EventTrigger());
+                    dayRectangle.Fill = Brushes.LightGreen;
+
+                    dayRectangle.StrokeThickness = gap/2;
+                    dayRectangle.Stroke = Brushes.White;
+
+                    dayRectangle.MouseEnter += DayRectangle_MouseEnter;
+                    dayRectangle.MouseLeave += DayRectangle_MouseLeave;
+                    dayRectangle.MouseDown += DayRectangle_MouseDown;
 
                     CalendarCanvas.Children.Add(dayRectangle);
-                    Canvas.SetLeft(dayRectangle, x + (edge + gap) * i);
-                    Canvas.SetTop(dayRectangle, y + (edge + gap) * j);
+                    Canvas.SetLeft(dayRectangle, x + dayRectangle.Width * i);
+                    Canvas.SetTop(dayRectangle, y + dayRectangle.Width * j);
                 }
             }
         }
@@ -65,6 +72,36 @@ namespace GitDrawer
         private void Commits(int count)
         {
             Console.Text += "\n(" + count + ")\n" + new String('-', 15);
+        }
+
+        private void DayRectangle_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Rectangle dayRectangle = sender as Rectangle;
+            dayRectangle.Fill = Brushes.Green;
+        }
+
+        private void DayRectangle_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Rectangle dayRectangle = sender as Rectangle;
+            dayRectangle.Fill = Brushes.LightGreen;
+        }
+
+        private void DayRectangle_MouseDown(object sender, MouseEventArgs e)
+        {
+            Rectangle dayRectangle = sender as Rectangle;
+            if (dayRectangle.Fill != Brushes.DarkGreen)
+            {
+                dayRectangle.Fill = Brushes.DarkGreen;
+                dayRectangle.MouseEnter -= DayRectangle_MouseEnter;
+                dayRectangle.MouseLeave -= DayRectangle_MouseLeave;
+            }
+            else
+            {
+                dayRectangle.Fill = Brushes.LightGreen;
+                dayRectangle.MouseEnter += DayRectangle_MouseEnter;
+                dayRectangle.MouseLeave += DayRectangle_MouseLeave;
+            }
+            
         }
     }
 }
