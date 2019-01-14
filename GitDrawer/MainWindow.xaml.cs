@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using GitDrawer.ParserCore;
 using GitDrawer.GitCore;
 
 namespace GitDrawer
@@ -26,15 +25,36 @@ namespace GitDrawer
         {
             InitializeComponent();
 
+            /*
             Parser parser = new Parser("aprimikirio", DateTime.Now);
             parser.OnCommits += Commits;
             parser.OnNewData += ConsoleAddText;
             parser.OnError += ConsoleAddText;
+            */
 
-            GitWorker worker = new GitWorker("C:\\Program Files\\Git");
-            ConsoleAddText(worker.GitCommand("D:\\Projects\\Parser", " add *"));
-            ConsoleAddText(worker.GitCommand("D:\\Projects\\Parser", " commit -m \"test\""));
-            ConsoleAddText(worker.GitCommand("D:\\Projects\\Parser", " push origin master"));
+            DrawGrid(50, 30);
+
+            //GitWorker worker = new GitWorker("C:\\Program Files\\Git", "D:\\Projects\\GitDrawer");
+        }
+
+        private void DrawGrid(double x = 0, double y = 0, double edge = 10, double gap = 2, int width = 53, int height = 7)
+        {for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    Rectangle dayRectangle = new Rectangle();
+                    dayRectangle.Width = edge;
+                    dayRectangle.Height = edge;
+                    dayRectangle.VerticalAlignment = VerticalAlignment.Top;
+                    dayRectangle.HorizontalAlignment = HorizontalAlignment.Left;
+                    dayRectangle.Fill = Brushes.Green;
+                    dayRectangle.Triggers.Add( new EventTrigger());
+
+                    CalendarCanvas.Children.Add(dayRectangle);
+                    Canvas.SetLeft(dayRectangle, x + (edge + gap) * i);
+                    Canvas.SetTop(dayRectangle, y + (edge + gap) * j);
+                }
+            }
         }
 
         private void ConsoleAddText(string message)

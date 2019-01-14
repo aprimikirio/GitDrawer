@@ -8,7 +8,7 @@ using AngleSharp.Dom.Html;
 using System.Net;
 using System.Net.Http;
 
-namespace GitDrawer.ParserCore
+namespace GitDrawer.GitCore
 {
     class Parser
     {

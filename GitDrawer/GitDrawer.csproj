@@ -73,7 +73,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParserCore\Parser.cs" />
+    <Compile Include="GitCore\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
