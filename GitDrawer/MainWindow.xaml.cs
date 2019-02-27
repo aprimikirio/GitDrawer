@@ -101,7 +101,6 @@ namespace GitDrawer
                 dayRectangle.MouseEnter += DayRectangle_MouseEnter;
                 dayRectangle.MouseLeave += DayRectangle_MouseLeave;
             }
-            
         }
     }
 }
